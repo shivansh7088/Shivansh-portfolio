@@ -1,44 +1,40 @@
 import { useState, useEffect, useRef } from 'react';
 
 interface ObserverOptions {
-    threshold?: number;
-    rootMargin?: string;
-    triggerOnce?: boolean;
+  threshold?: number;
+  rootMargin?: string;
+  triggerOnce?: boolean;
 }
 
 export const useIntersectionObserver = (options: ObserverOptions = {}) => {
-    const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
+  const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
-        const element = containerRef.current;
-        if (!element) return;
-        
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    if (triggerOnce) {
-                        observer.unobserve(element);
-                    }
-                } else {
-                    if (!triggerOnce) {
-                         setIsVisible(false);
-                    }
-                }
-            },
-            { threshold, rootMargin }
-        );
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
 
-        observer.observe(element);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (triggerOnce) observer.unobserve(entry.target);
+        } else {
+          if (!triggerOnce) setIsVisible(false);
+        }
+      },
+      { threshold, rootMargin }
+    );
 
-        return () => {
-            if (element) {
-                observer.unobserve(element);
-            }
-        };
-    }, [containerRef, threshold, rootMargin, triggerOnce]);
+    observer.observe(element);
 
-    return [containerRef, isVisible] as const;
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [threshold, rootMargin, triggerOnce]);
+
+  return [containerRef, isVisible] as const;
 };
