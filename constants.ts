@@ -3,7 +3,7 @@ import type { Project } from './types';
 export const PERSONAL_INFO = {
     name: "Shivansh Dhakare",
     title: "Full-Stack Developer",
-    profilePicture: "/images/PHOTO.jpg", // Path updated for better organization
+    profilePicture: "/images/PHOTO.jpg", 
     resumeUrl: "/public/SHIVANSH-DHAKARE-Resume.pdf"
 };
 
@@ -12,7 +12,7 @@ export const PROJECTS: Project[] = [
         id: 'proj1',
         title: 'Face Recognition Attendance System',
         category: 'Web App',
-        image: "/images/FaceRimage.jpeg", // Path updated for better organization',
+        image: "/images/FaceRimage.jpeg", 
         description: 'Real-time face recognition-based attendance system using Python and OpenCV (LBPH). The system captures webcam input, detects faces, and marks attendance automatically. Attendance data is stored and managed using a MySQL database for scalability and performance. Designed for educational and corporate use.',
         techStack: ['• Python', '• OpenCV', '• LBPH', '• MySql', '• Tkinter', '• Real-time Camera Feed', '• Image Dataset','Harcascade Classifier'],
         liveDemoUrl: '#',
